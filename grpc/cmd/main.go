@@ -26,7 +26,7 @@ func (s *server) Get(ctx context.Context, req *desc.GetRequest) (*desc.GetRespon
 			Name:      gofakeit.Name(),
 			Email:     gofakeit.Email(),
 			CreatedAt: timestamppb.New(gofakeit.Date()),
-			Role:      desc.UserRole_USER_ROLE_USER,
+			Role:      desc.UserRole_ADMIN_ROLE,
 			UpdatedAt: timestamppb.New(gofakeit.Date()),
 		},
 	}, nil
