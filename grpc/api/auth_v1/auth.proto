@@ -16,8 +16,9 @@ service AuthV1 {
 }
 
 enum UserRole {
-  USER_ROLE_USER = 0;
-  USER_ROLE_ADMIN = 1;
+  UNKNOWN         = 0;
+  USER_ROLE_USER  = 1;
+  USER_ROLE_ADMIN = 2;
 }
 
 message User {
