@@ -16,9 +16,9 @@ service AuthV1 {
 }
 
 enum UserRole {
-  UNKNOWN         = 0;
-  USER_ROLE_USER  = 1;
-  USER_ROLE_ADMIN = 2;
+  UNKNOWN = 0;
+  USER    = 1;
+  ADMIN   = 2;
 }
 
 message User {
@@ -26,7 +26,7 @@ message User {
   string email = 2;
   string password = 3;
   string password_confirm = 4;
-  UserRole role = 5; //(требуется создать enum из двух вариантов user и admin)
+  UserRole role = 5;
 }
 
 message UserInfo {
@@ -66,6 +66,7 @@ message UpdateRequest {
   int64 id = 1;
   google.protobuf.StringValue name = 2;
   google.protobuf.StringValue email = 3;
+  google.protobuf.Int32Value role = 4;
 }
 
 message DeleteRequest {
