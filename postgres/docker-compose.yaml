@@ -5,11 +5,11 @@ volumes:
 
 services:
   pg:
-    image: postgres:15-alpine
+    image: postgres:15-alpine3.18
     environment:
-      - "POSTGRES_DB=${PG_DATABASE_NAME}"
-      - "POSTGRES_USER=${PG_USER}"
-      - "POSTGRES_PASSWORD=${PG_PASSWORD}"
+      - "POSTGRES_DB=${POSTGRES_DB}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
     ports:
       - "${PG_PORT}:5432"
     volumes:
