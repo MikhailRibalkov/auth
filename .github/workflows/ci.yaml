@@ -47,7 +47,7 @@ jobs:
             # Set up variables
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
             
-            # Login into Selectel Registry
+            # Login into Server
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.SERVER_PASSWORD }} ${{secrets.SERVER_HOST}}
             
             # Stop running container
@@ -57,4 +57,4 @@ jobs:
             docker rm $CONTAINER_NAME
             
             # Run a new container from a new image
-            docker run -d -p 8081:8081 --name $CONTAINER_NAME -t $REGISTRY/test/$IMAGE_NAME@$TAG_NAME
+            docker run -d -p 8081:8081 --name $CONTAINER_NAME -t $REGISTRY/test/$IMAGE_NAME:$TAG_NAME
