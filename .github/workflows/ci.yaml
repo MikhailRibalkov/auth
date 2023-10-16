@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 env:
-  REGISTRY: "cr.selcloud.ru"
+  REGISTRY: "cr.selcloud.ru/test"
   IMAGE_NAME: "auth-server"
   CONTAINER_NAME: "auth-server-container"
 
@@ -48,7 +48,7 @@ jobs:
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
             
             # Login into Server
-            docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.SERVER_PASSWORD }} ${{secrets.SERVER_HOST}}
+            docker login -u ${{ secrets.SSH_USERNAME }} -p ${{ secrets.SERVER_PASSWORD }} ${{secrets.SERVER_HOST}}
             
             # Stop running container
             docker stop $CONTAINER_NAME
