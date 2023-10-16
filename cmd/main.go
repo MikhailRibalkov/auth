@@ -38,8 +38,10 @@ func (s *server) Get(ctx context.Context, req *deps.GetRequest) (*deps.GetRespon
 	}, nil
 }
 
-func (s *server) Create(ctx context.Context, req *deps.CreateRequest) (*deps.CreateResponse, error) {
-	client := sq.PgClient{}
+func (s *server) Create(ctx context.Context, re *deps.CreateRequest) (*deps.CreateResponse, error) {
+	req := *re
+
+	client := sq.PgClient{ctx}
 	_, err := client.CreateUser(req)
 	if err != nil {
 		log.Printf("can not create user: %s", err)

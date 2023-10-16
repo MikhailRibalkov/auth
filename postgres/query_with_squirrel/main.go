@@ -15,7 +15,7 @@ const (
 )
 
 type PgClient struct {
-	ctx context.Context
+	Ctx context.Context
 }
 
 type PgInterface interface {
@@ -25,10 +25,10 @@ type PgInterface interface {
 	DeleteUser(id int64)
 }
 
-func (pgc *PgClient) CreateUser(user *deps.CreateRequest) (id int64, err error) {
+func (pgc *PgClient) CreateUser(user deps.CreateRequest) (id int64, err error) {
 	// Создаем пул соединений с базой данных
 	var usr = user.GetUser()
-	pool, err := pgxpool.Connect(pgc.ctx, dbDSN)
+	pool, err := pgxpool.Connect(pgc.Ctx, dbDSN)
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 		return -1, err
@@ -49,7 +49,7 @@ func (pgc *PgClient) CreateUser(user *deps.CreateRequest) (id int64, err error) 
 	}
 
 	var authID int
-	err = pool.QueryRow(pgc.ctx, query, args...).Scan(&authID)
+	err = pool.QueryRow(pgc.Ctx, query, args...).Scan(&authID)
 	if err != nil {
 		log.Fatalf("failed to insert note: %v", err)
 		return -1, err
@@ -61,7 +61,7 @@ func (pgc *PgClient) CreateUser(user *deps.CreateRequest) (id int64, err error) 
 
 func (pgc *PgClient) GetUserInfo(reqId *deps.GetRequest) (info deps.UserInfo, err error) {
 	var id = reqId.GetId()
-	pool, err := pgxpool.Connect(pgc.ctx, dbDSN)
+	pool, err := pgxpool.Connect(pgc.Ctx, dbDSN)
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 		return deps.UserInfo{}, err
@@ -83,7 +83,7 @@ func (pgc *PgClient) GetUserInfo(reqId *deps.GetRequest) (info deps.UserInfo, er
 
 	info = deps.UserInfo{}
 
-	err = pool.QueryRow(pgc.ctx, query, args...).Scan(&info.Id, &info.Name, &info.Email, &info.Role, &info.CreatedAt, &info.UpdatedAt)
+	err = pool.QueryRow(pgc.Ctx, query, args...).Scan(&info.Id, &info.Name, &info.Email, &info.Role, &info.CreatedAt, &info.UpdatedAt)
 	if err != nil {
 		log.Fatalf("failed to select notes: %v", err)
 		return deps.UserInfo{}, err
@@ -95,7 +95,7 @@ func (pgc *PgClient) GetUserInfo(reqId *deps.GetRequest) (info deps.UserInfo, er
 }
 
 func (pgc *PgClient) UpdateUser(req *deps.UpdateRequest) (id int64, err error) {
-	pool, err := pgxpool.Connect(pgc.ctx, dbDSN)
+	pool, err := pgxpool.Connect(pgc.Ctx, dbDSN)
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 		return -1, err
@@ -117,7 +117,7 @@ func (pgc *PgClient) UpdateUser(req *deps.UpdateRequest) (id int64, err error) {
 		return -1, err
 	}
 
-	res, err := pool.Exec(pgc.ctx, query, args...)
+	res, err := pool.Exec(pgc.Ctx, query, args...)
 	if err != nil {
 		log.Fatalf("failed to update note: %v", err)
 		return -1, err
@@ -129,7 +129,7 @@ func (pgc *PgClient) UpdateUser(req *deps.UpdateRequest) (id int64, err error) {
 
 func (pgc *PgClient) DeleteUser(req *deps.DeleteRequest) (id int64, err error) {
 	var delId = req.GetId()
-	pool, err := pgxpool.Connect(pgc.ctx, dbDSN)
+	pool, err := pgxpool.Connect(pgc.Ctx, dbDSN)
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 		return -1, err
@@ -147,7 +147,7 @@ func (pgc *PgClient) DeleteUser(req *deps.DeleteRequest) (id int64, err error) {
 		return -1, err
 	}
 
-	res, err := pool.Exec(pgc.ctx, query, args...)
+	res, err := pool.Exec(pgc.Ctx, query, args...)
 	if err != nil {
 		log.Fatalf("failed to update note: %v", err)
 		return -1, err
