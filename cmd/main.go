@@ -1,14 +1,15 @@
 package main
 
 import (
-	context "context"
+	"context"
+	"log"
+	"net"
+
 	deps "github.com/MikhailRibalkov/auth/pkg/auth_v1/pkg/auth_v1"
 	sq "github.com/MikhailRibalkov/auth/pkg/auth_v1/postgres/query_with_squirrel"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"log"
-	"net"
 )
 
 const grpcPort = ":8081"
