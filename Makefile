@@ -29,3 +29,14 @@ generate-note-api:
 	--go-grpc_out=pkg/auth_v1 --go-grpc_opt=paths=source_relative \
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	api/auth_v1/auth.proto
+
+buil:
+	GOOS=linux GOARCH=and64 go build -o auth-server cmd/main.go
+
+copy-to-server:
+	scp auth-server root@45.138.72.252:
+
+docker-build-and-push:
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/test/auth-server:v0.0.1 .
+	docker login -u token -p CRgAAAAAzTka-uRSaiSDWxbfnL6xa0JhPIU6TLm9 cr.selcloud.ru/test
+	docker push cr.selcloud.ru/test/auth-server:v0.0.1
